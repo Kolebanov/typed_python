@@ -6,6 +6,6 @@ class Coordinates(NamedTuple):
     longitude: float
 
 
-def get_gps_coordinates() -> Coordinates:
+def get_coordinates() -> Coordinates:
     """Returns current coordinates using PC GPS"""
     return Coordinates(latitude=0.0, longitude=0.0)
