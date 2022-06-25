@@ -1,6 +1,7 @@
 from typing import NamedTuple
 import geocoder
 from exceptions import CantGetCoordinates
+from config import USE_ROUNDED_COORDS
 
 
 class Coordinates(NamedTuple):
@@ -17,6 +18,8 @@ def get_coordinates() -> Coordinates:
         raise CantGetCoordinates
     latitude = g.latlng[0]
     longitude = g.latlng[1]
+    if USE_ROUNDED_COORDS:
+        latitude, longitude = map(lambda c: round(c, 1), [latitude, longitude])
     # print(g.latlng)
     return Coordinates(latitude=latitude, longitude=longitude)
 
