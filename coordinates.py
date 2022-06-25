@@ -15,7 +15,6 @@ def get_coordinates() -> Coordinates:
     # print(type(g_class_name))
     if (g is None) or g_class_name != 'IpinfoQuery':
         raise CantGetCoordinates
-   
     latitude = g.latlng[0]
     longitude = g.latlng[1]
     # print(g.latlng)
