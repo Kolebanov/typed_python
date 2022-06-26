@@ -1,9 +1,17 @@
 from dataclasses import dataclass
 from datetime import datetime
-from typing import TypeAlias
 from enum import Enum
+import json
+from json.decoder import JSONDecodeError
+import ssl
+from typing import Literal, TypeAlias
+from enum import Enum
+import urllib.request
+from urllib.error import URLError
 
 from coordinates import Coordinates
+import config
+from exceptions import ApiServiceError
 
 
 Celsius: TypeAlias = int
@@ -30,10 +38,13 @@ class Weather:
 
 def get_weather(coordinates: Coordinates) -> Weather:
     """Requests weather in OpenWeather API and returns it"""
-    return Weather(
-        temperature=20,
-        weather_type=WeatherType.CLEAR,
-        sunrise=datetime.fromisoformat("2022-05-04 04:00:00"),
-        sunset=datetime.fromisoformat("2022-05-04 20:25:00"),
-        city="Moscow"
-    )
+    openweather_response = _get_openweather_response(
+        latitude=coordinates.latitude, longitude=coordinates.longitude)
+    weather = _parse_openweather_response(openweather_response)
+    return weather
+
+def _get_openweather_response(latitude: float, longitude: float) -> str:
+    pass
+
+def _parse_openweather_response(openweather_response: str) -> Weather:
+    pass
