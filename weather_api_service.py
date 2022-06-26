@@ -44,7 +44,26 @@ def get_weather(coordinates: Coordinates) -> Weather:
     return weather
 
 def _get_openweather_response(latitude: float, longitude: float) -> str:
-    pass
+    ssl._create_default_https_context = ssl._create_unverified_context
+    url = config.OPENWEATHER_URL.format(
+        latitude=latitude, longitude=longitude)
+    try:
+        return urllib.request.urlopen(url).read()
+    except URLError:
+        raise ApiServiceError
 
 def _parse_openweather_response(openweather_response: str) -> Weather:
-    pass
+    try:
+        openweather_dict = json.loads(openweather_response)
+    except JSONDecodeError:
+        raise ApiServiceError
+    return Weather(
+        temperature=
+    )
+
+def _parse_temperature(openweather_dict: dict) -> Celsius:
+    return round(openweather_dict["main"]["temp"])
+
+def _parse_weather_type(openweather_dict: dict) -> WeatherType:
+    try:
+        weather_type_id = str(openweather_dict["weather"][0]["id"])
