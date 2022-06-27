@@ -67,3 +67,20 @@ def _parse_temperature(openweather_dict: dict) -> Celsius:
 def _parse_weather_type(openweather_dict: dict) -> WeatherType:
     try:
         weather_type_id = str(openweather_dict["weather"][0]["id"])
+    except (IndexError, KeyError):
+        raise ApiServiceError
+    weather_types = {
+        "1": WeatherType.THUNDERSTORM,
+        "3": WeatherType.DRIZZLE,
+        "5": WeatherType.RAIN,
+        "6": WeatherType.SNOW,
+        "7": WeatherType.FOG,
+        "800": WeatherType.CLEAR,
+        "80": WeatherType.CLOUDS
+    }
+    for _id, _weather_type in weather_types.items():
+        if weather_type_id.startswith(_id):
+            return _weather_type
+    raise ApiServiceError
+
+def _parse_sun
