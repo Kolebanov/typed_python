@@ -18,7 +18,7 @@ from exceptions import ApiServiceError
 Celsius: TypeAlias = int
 
 
-class WeatherType(Enum):
+class WeatherType(str, Enum):
     THUNDERSTORM = "Гроза"
     DRIZZLE = "Изморось"
     RAIN = "Дождь"
