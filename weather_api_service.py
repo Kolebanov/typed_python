@@ -58,7 +58,11 @@ def _parse_openweather_response(openweather_response: str) -> Weather:
     except JSONDecodeError:
         raise ApiServiceError
     return Weather(
-        temperature=
+        temperature=_parse_temperature(openweather_dict),
+        weather_type=_parse_weather_type(openweather_dict),
+        sunrise=_parse_sun_time(openweather_dict, "sunrise"),
+        sunset=_parse_sun_time(openweather_dict, "sunset"),
+        city=_parse_city(openweather_dict)
     )
 
 def _parse_temperature(openweather_dict: dict) -> Celsius:
@@ -83,4 +87,14 @@ def _parse_weather_type(openweather_dict: dict) -> WeatherType:
             return _weather_type
     raise ApiServiceError
 
-def _parse_sun
+def _parse_sun_time(
+       openweather_dict: dict,
+       time: Literal["sunrise"] | Literal["sunset"]) -> datetime:
+    return datetime.fromtimestamp(openweather_dict["sys"][time])
+
+def _parse_city(openweather_dict: dict) -> str:
+    return openweather_dict["name"]
+
+
+if __name__ == "__main__":
+    print(get_weather(Coordinates(latitude=55.7, longitude=37.6)))
