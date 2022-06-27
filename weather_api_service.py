@@ -8,6 +8,7 @@ from typing import Literal, TypeAlias
 from enum import Enum
 import urllib.request
 from urllib.error import URLError
+import pprint
 
 from coordinates import Coordinates
 import config
@@ -97,4 +98,4 @@ def _parse_city(openweather_dict: dict) -> str:
 
 
 if __name__ == "__main__":
-    print(get_weather(Coordinates(latitude=55.7, longitude=37.6)))
+    pprint.pprint(get_weather(Coordinates(latitude=55.7, longitude=37.6)))
